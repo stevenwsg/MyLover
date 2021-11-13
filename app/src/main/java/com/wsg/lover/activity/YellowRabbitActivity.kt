@@ -2,7 +2,6 @@ package com.wsg.lover.activity
 
 import android.content.Intent
 import android.os.Bundle
-import com.wsg.lover.MainActivity
 import com.wsg.lover.R
 import com.wsg.lover.base.BaseActivity
 import pl.droidsonroids.gif.GifImageView
@@ -22,9 +21,9 @@ class YellowRabbitActivity : BaseActivity() {
 
         gifView = findViewById(R.id.gifView)
         gifView?.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
         }
     }
 }
