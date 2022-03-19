@@ -44,7 +44,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
-    compile 'cn.wolfspider:autowraplinelayout:1.0.1'
+    implementation 'cn.wolfspider:autowraplinelayout:1.0.1'
 
     // bmob
     implementation 'io.github.bmob:android-sdk:3.8.12'
