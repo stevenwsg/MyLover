@@ -24,8 +24,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:resizeableActivity="true"
+        android:maxAspectRatio="2.4"
         android:theme="@style/Theme.MyLover">
-        <activity android:name=".activity.YellowRabbitActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,6 +39,19 @@
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.wsg.lover.BmobContentProvider">
         </provider>
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" />
+
+        <!--适配华为（huawei）刘海屏-->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true"/>
+        <!--适配小米（xiaomi）刘海屏-->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
 
     </application>
 
