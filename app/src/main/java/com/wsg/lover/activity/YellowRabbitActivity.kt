@@ -1,7 +1,7 @@
 package com.wsg.lover.activity
 
-import android.content.Intent
 import android.os.Bundle
+import com.gyf.immersionbar.ImmersionBar
 import com.wsg.lover.R
 import com.wsg.lover.base.BaseActivity
 import pl.droidsonroids.gif.GifImageView

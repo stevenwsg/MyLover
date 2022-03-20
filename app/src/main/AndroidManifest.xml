@@ -35,6 +35,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.YellowRabbitActivity"/>
+
+        <activity android:name=".activity.LoveActivity"/>
+
+        <activity android:name=".activity.MainActivity"/>
+
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.wsg.lover.BmobContentProvider">
