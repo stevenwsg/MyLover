@@ -4,10 +4,14 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="test"
-        android:textSize="28dp"/>
+        android:textSize="18dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginHorizontal="60dp"/>
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.wsg.lover.activity
 
+import android.content.Intent
 import android.os.Bundle
 import com.gyf.immersionbar.ImmersionBar
 import com.wsg.lover.R
@@ -21,9 +22,9 @@ class YellowRabbitActivity : BaseActivity() {
 
         gifView = findViewById(R.id.gifView)
         gifView?.setOnClickListener {
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }

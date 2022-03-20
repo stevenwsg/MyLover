@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
  */
 
 open class BaseViewModel : ViewModel() {
-    protected val TAG = javaClass::class.java.simpleName
 
     override fun onCleared() {
         super.onCleared()
