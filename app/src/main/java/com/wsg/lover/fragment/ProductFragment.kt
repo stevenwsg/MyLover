@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.wsg.lover.R
 import com.wsg.lover.base.BaseFragment
+import com.wsg.lover.databinding.FragmentGiftBinding
 import com.wsg.lover.viewModel.GiftViewModel
 
 /**
@@ -16,26 +17,30 @@ import com.wsg.lover.viewModel.GiftViewModel
  */
 class ProductFragment : BaseFragment() {
 
+    private var _binding: FragmentGiftBinding? = null
+    private val binding get() = _binding!!
+
     private var viewModel: GiftViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_gift, container, false)
+    ): View {
+        _binding = FragmentGiftBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initView(view)
+        initView()
         initVm()
         initObserve()
         initData()
     }
 
-    private fun initView(view: View) {
+    private fun initView() {
 
     }
 
@@ -51,5 +56,10 @@ class ProductFragment : BaseFragment() {
 
     private fun initData() {
         viewModel?.getGifts()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
