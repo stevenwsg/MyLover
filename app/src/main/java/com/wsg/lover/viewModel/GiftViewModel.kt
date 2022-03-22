@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 private const val TAG = "BaseViewModel"
 
 class GiftViewModel : BaseViewModel() {
-    var gifts = MutableLiveData<LoveGift>()
+    var gifts = MutableLiveData<MutableList<LoveGift>>()
 
     fun getGifts() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -30,7 +30,7 @@ class GiftViewModel : BaseViewModel() {
                     Log.d(TAG, "" + p0)
                     if (p1 == null) {
                         p0?.apply {
-                            gifts.value = p1
+                            gifts.postValue(this)
                         }
                     }
                 }
