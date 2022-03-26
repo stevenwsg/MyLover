@@ -4,14 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.TextView
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.gyf.immersionbar.ImmersionBar
-import com.wsg.lover.R
 import com.wsg.lover.base.BaseActivity
+import com.wsg.lover.databinding.ActivityLoveBinding
 import com.wsg.lover.util.ConstantsLove
-import com.wsg.lover.viewModel.GiftViewModel
+import com.wsg.lover.util.RandomUtil
 
 /**
  * Create on 2021/11/20.
@@ -20,9 +16,12 @@ import com.wsg.lover.viewModel.GiftViewModel
  */
 class LoveActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityLoveBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_love)
+        binding = ActivityLoveBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initView()
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -32,8 +31,9 @@ class LoveActivity : BaseActivity() {
     }
 
     private fun initView() {
+        binding.gifView.setImageResource(RandomUtil.getDrawableResUtil(this))
         ConstantsLove.getLove()?.apply {
-            findViewById<TextView>(R.id.name).text = this.content
+            binding.name.text = this.content
         }
     }
 

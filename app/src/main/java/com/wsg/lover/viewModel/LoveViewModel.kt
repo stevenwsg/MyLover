@@ -9,6 +9,7 @@ import cn.bmob.v3.listener.FindListener
 import com.wsg.lover.base.BaseViewModel
 import com.wsg.lover.bean.LoveContent
 import com.wsg.lover.util.ConstantsLove
+import com.wsg.lover.util.RandomUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -29,7 +30,7 @@ class LoveViewModel : BaseViewModel() {
                     if (p1 == null) {
                         Log.d(TAG, "" + p0)
                         p0?.let {
-                            ConstantsLove.setLove(p0[0])
+                            ConstantsLove.setLove(p0[RandomUtil.getRandomIndex(p0.size)])
                         }
                     }
                 }
