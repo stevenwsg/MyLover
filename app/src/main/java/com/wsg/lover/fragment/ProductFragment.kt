@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.wsg.lover.R
+import com.wsg.lover.adapter.ProductAdapter
 import com.wsg.lover.base.BaseFragment
 import com.wsg.lover.databinding.FragmentGiftBinding
 import com.wsg.lover.viewModel.GiftViewModel
@@ -21,6 +24,7 @@ class ProductFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private var viewModel: GiftViewModel? = null
+    private lateinit var adapter: ProductAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +45,9 @@ class ProductFragment : BaseFragment() {
     }
 
     private fun initView() {
-
+        binding.product.layoutManager = GridLayoutManager(context, 2)
+        adapter = ProductAdapter()
+        binding.product.adapter = adapter
     }
 
     private fun initVm() {
@@ -50,7 +56,8 @@ class ProductFragment : BaseFragment() {
 
     private fun initObserve() {
         viewModel?.gifts?.observe(viewLifecycleOwner) {
-
+            adapter.items = it
+            adapter.notifyDataSetChanged()
         }
     }
 
