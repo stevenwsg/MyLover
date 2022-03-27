@@ -29,14 +29,29 @@ class MainActivity : BaseActivity() {
     private fun initView() {
         giftFragment = ProductFragment()
         userFragment = UserFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.content, giftFragment).commitAllowingStateLoss()
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.content, giftFragment)
+            .add(R.id.content, userFragment)
+            .show(giftFragment)
+            .hide(userFragment)
+            .commitAllowingStateLoss()
 
         binding.giftLayoutView.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.content, giftFragment).commitAllowingStateLoss()
+            supportFragmentManager
+                .beginTransaction()
+                .show(giftFragment)
+                .hide(userFragment)
+                .commitAllowingStateLoss()
         }
 
         binding.mineLayoutView.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.content, userFragment).commitAllowingStateLoss()
+            supportFragmentManager
+                .beginTransaction()
+                .show(userFragment)
+                .hide(giftFragment)
+                .commitAllowingStateLoss()
         }
     }
 }
