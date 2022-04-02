@@ -5,12 +5,14 @@ import androidx.lifecycle.viewModelScope
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
+import cn.bmob.v3.listener.UpdateListener
 import com.wsg.lover.base.BaseViewModel
 import com.wsg.lover.bean.Coin
 import com.wsg.lover.bean.MyCoin
 import com.wsg.lover.util.SpHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 /**
  * Create on 2022/3/22.
@@ -23,7 +25,9 @@ private const val TAG = "CoinViewModel"
 class CoinViewModel : BaseViewModel() {
 
     var coins = MutableLiveData<MutableList<Coin>>()
-    val myCoin = MutableLiveData<MyCoin>()
+    val myCoin = MutableLiveData<Int>()
+
+    private var objectId = ""
 
     fun getCoins() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -47,7 +51,8 @@ class CoinViewModel : BaseViewModel() {
                 override fun done(p0: MutableList<MyCoin>?, p1: BmobException?) {
                     if (p1 == null) {
                         p0?.apply {
-                            myCoin.postValue(p0[0])
+                            objectId = p0[0].objectId
+                            myCoin.postValue(p0[0].num)
                         }
                     }
                 }
@@ -55,12 +60,24 @@ class CoinViewModel : BaseViewModel() {
         }
     }
 
-    fun earnCoin() {
+    fun earnCoin(coin: Coin) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val nCoin = MyCoin( myCoin.value!! + coin.num)
 
-    }
-
-    fun updateMyCoin() {
-
+            try {
+                nCoin.update(objectId, object : UpdateListener() {
+                    override fun done(p0: BmobException?) {
+                        if (p0 == null) {
+                        myCoin.postValue(nCoin.num)
+                        } else {
+                            p0.printStackTrace()
+                        }
+                    }
+                })
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
 }

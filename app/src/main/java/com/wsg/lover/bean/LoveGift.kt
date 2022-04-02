@@ -10,5 +10,5 @@ import cn.bmob.v3.BmobObject
 data class LoveGift(
     val name: String,
     val photo: String,
-    val coin: Float
+    val coin: Int
 ) : BmobObject()

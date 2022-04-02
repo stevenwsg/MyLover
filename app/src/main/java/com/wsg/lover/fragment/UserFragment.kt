@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wsg.lover.adapter.CoinAdapter
+import com.wsg.lover.adapter.CoinClickListener
 import com.wsg.lover.base.BaseFragment
+import com.wsg.lover.bean.Coin
 import com.wsg.lover.databinding.FragmentCoinBinding
 import com.wsg.lover.util.SpHelper
 import com.wsg.lover.viewModel.CoinViewModel
@@ -43,7 +45,11 @@ class UserFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rv.layoutManager = LinearLayoutManager(context)
-        adapter = CoinAdapter()
+        adapter = CoinAdapter(object : CoinClickListener {
+            override fun onClick(item: Coin) {
+                viewModel?.earnCoin(item)
+            }
+        })
         binding.rv.adapter = adapter
 
         initViewModel()
@@ -65,10 +71,10 @@ class UserFragment : BaseFragment() {
                 }
             }
             myCoin.observe(viewLifecycleOwner) {
+                binding.myCoin.text = "我的积分 $it"
                 context?.apply {
-                    SpHelper.saveCoin(this, it.num)
+                    SpHelper.saveCoin(this, it)
                 }
-                binding.myCoin.text = "我的积分 ${it.num}"
             }
         }
     }

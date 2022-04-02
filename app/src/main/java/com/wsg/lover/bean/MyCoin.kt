@@ -8,5 +8,5 @@ import cn.bmob.v3.BmobObject
  * @author wangshengguo.
  */
 data class MyCoin(
-    val num: Int
+    var num: Int
 ) : BmobObject()

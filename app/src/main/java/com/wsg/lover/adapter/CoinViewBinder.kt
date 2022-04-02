@@ -16,7 +16,7 @@ import me.drakeet.multitype.ItemViewBinder
  *
  * @author wangshengguo.
  */
-class CoinViewBinder : ItemViewBinder<Coin, CoinViewBinder.CoinViewHolder>() {
+class CoinViewBinder(val coinClickListener: CoinClickListener) : ItemViewBinder<Coin, CoinViewBinder.CoinViewHolder>() {
 
     class CoinViewHolder(binding: ItemCoinBinding) : RecyclerView.ViewHolder(binding.root) {
         var name: TextView? = null
@@ -34,6 +34,13 @@ class CoinViewBinder : ItemViewBinder<Coin, CoinViewBinder.CoinViewHolder>() {
 
     override fun onBindViewHolder(holder: CoinViewHolder, item: Coin) {
         holder.name?.text = item.name
-        holder.num?.text = "${item.num} 积分"
+        holder.num?.apply {
+            text = "${item.num} 积分"
+            setOnClickListener { coinClickListener.onClick(item) }
+        }
     }
+}
+
+interface CoinClickListener {
+    fun onClick(item: Coin)
 }

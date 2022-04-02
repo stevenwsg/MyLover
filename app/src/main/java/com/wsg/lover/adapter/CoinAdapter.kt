@@ -8,8 +8,8 @@ import me.drakeet.multitype.MultiTypeAdapter
  *
  * @author wangshengguo.
  */
-class CoinAdapter : MultiTypeAdapter() {
+class CoinAdapter(private val coinClickListener: CoinClickListener) : MultiTypeAdapter() {
     init {
-        register(Coin::class.java, CoinViewBinder())
+        register(Coin::class.java, CoinViewBinder(coinClickListener))
     }
 }
