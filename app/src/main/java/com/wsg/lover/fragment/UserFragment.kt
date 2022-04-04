@@ -1,6 +1,7 @@
 package com.wsg.lover.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -74,6 +75,9 @@ class UserFragment : BaseFragment() {
                 binding.myCoin.text = "我的积分 $it"
                 context?.apply {
                     SpHelper.saveCoin(this, it)
+                    if (TextUtils.isEmpty(viewModel?.objectId)) {
+                        viewModel?.objectId?.let { it1 -> SpHelper.saveMyCoinId(this, it1) }
+                    }
                 }
             }
         }

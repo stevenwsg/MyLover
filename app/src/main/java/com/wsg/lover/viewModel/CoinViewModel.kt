@@ -1,11 +1,14 @@
 package com.wsg.lover.viewModel
 
+import android.app.Application
+import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.UpdateListener
+import com.wsg.lover.LoveApplication
 import com.wsg.lover.base.BaseViewModel
 import com.wsg.lover.bean.Coin
 import com.wsg.lover.bean.MyCoin
@@ -27,7 +30,7 @@ class CoinViewModel : BaseViewModel() {
     var coins = MutableLiveData<MutableList<Coin>>()
     val myCoin = MutableLiveData<Int>()
 
-    private var objectId = ""
+    var objectId = ""
 
     fun getCoins() {
         viewModelScope.launch(Dispatchers.IO) {
