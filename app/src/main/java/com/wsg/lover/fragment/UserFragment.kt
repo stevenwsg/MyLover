@@ -83,6 +83,11 @@ class UserFragment : BaseFragment() {
         }
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        binding.myCoin.text = "我的积分 ${context?.let { SpHelper.getCoin(it) }}"
+    }
+
     private fun initData() {
         viewModel?.apply {
             getCoins()

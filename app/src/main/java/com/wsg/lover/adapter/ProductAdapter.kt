@@ -8,9 +8,9 @@ import me.drakeet.multitype.MultiTypeAdapter
  *
  * @author wangshengguo.
  */
-class ProductAdapter : MultiTypeAdapter() {
+class ProductAdapter(private val iConvertProduct: IConvertProduct) : MultiTypeAdapter() {
 
     init {
-        register(LoveGift::class.java, ProductViewBinder())
+        register(LoveGift::class.java, ProductViewBinder(iConvertProduct))
     }
 }

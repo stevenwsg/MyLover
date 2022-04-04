@@ -20,7 +20,7 @@ import me.drakeet.multitype.ItemViewBinder
  *
  * @author wangshengguo.
  */
-class ProductViewBinder : ItemViewBinder<LoveGift, ProductViewBinder.ProductHolder>() {
+class ProductViewBinder(val iConvertProduct: IConvertProduct) : ItemViewBinder<LoveGift, ProductViewBinder.ProductHolder>() {
 
     class ProductHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
         var photo: ImageView? = null
@@ -47,6 +47,15 @@ class ProductViewBinder : ItemViewBinder<LoveGift, ProductViewBinder.ProductHold
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
                 .into(it) }
         }
-        holder.coin?.text = item.coin.toString()
+        holder.coin?.apply {
+            text = "${item.coin} 积分"
+            setOnClickListener {
+                iConvertProduct.convert(item)
+            }
+        }
     }
+}
+
+interface IConvertProduct {
+    fun convert(item: LoveGift)
 }

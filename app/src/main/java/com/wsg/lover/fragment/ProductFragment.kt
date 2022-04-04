@@ -1,17 +1,24 @@
 package com.wsg.lover.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wsg.lover.R
+import com.wsg.lover.adapter.IConvertProduct
 import com.wsg.lover.adapter.ProductAdapter
 import com.wsg.lover.base.BaseFragment
+import com.wsg.lover.bean.LoveGift
+import com.wsg.lover.bean.RESULT_FAIL
 import com.wsg.lover.databinding.FragmentGiftBinding
+import com.wsg.lover.util.SpHelper
 import com.wsg.lover.viewModel.GiftViewModel
+import es.dmoral.toasty.Toasty
 
 /**
  * Create on 2022/3/20.
@@ -46,7 +53,19 @@ class ProductFragment : BaseFragment() {
 
     private fun initView() {
         binding.product.layoutManager = GridLayoutManager(context, 2)
-        adapter = ProductAdapter()
+        adapter = ProductAdapter(object : IConvertProduct {
+            override fun convert(item: LoveGift) {
+                if (context?.let { SpHelper.getCoin(it) < item.coin } == true
+                    || TextUtils.isEmpty(SpHelper.getMyCoinId(context!!))) {
+                    Toasty.info(context!!, "积分不够哦，小可爱要继续加油哦", Toast.LENGTH_SHORT, true).show()
+                } else {
+                    viewModel?.convertGift(
+                        SpHelper.getCoin(context!!) - item.coin,
+                        SpHelper.getMyCoinId(context!!)
+                    )
+                }
+            }
+        })
         binding.product.adapter = adapter
     }
 
@@ -58,6 +77,22 @@ class ProductFragment : BaseFragment() {
         viewModel?.gifts?.observe(viewLifecycleOwner) {
             adapter.items = it
             adapter.notifyDataSetChanged()
+        }
+
+        viewModel?.convertGiftResult?.observe(viewLifecycleOwner) {
+            when (it.result) {
+                RESULT_FAIL -> {
+                    context?.let { it1 ->
+                        Toasty.success(it1, "恭喜兑换成功，快告诉你的小宝贝兑换吧").show()
+                        SpHelper.saveCoin(it1, it.newCoin)
+                    }
+
+                }
+
+                RESULT_FAIL -> {
+                    context?.let { it1 -> Toasty.success(it1, "兑换失败， 小宝贝检查一下积分够嘛").show() }
+                }
+            }
         }
     }
 
