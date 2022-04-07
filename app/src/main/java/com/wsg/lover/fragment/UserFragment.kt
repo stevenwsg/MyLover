@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.wsg.lover.adapter.CoinAdapter
 import com.wsg.lover.adapter.CoinClickListener
 import com.wsg.lover.base.BaseFragment
 import com.wsg.lover.bean.Coin
 import com.wsg.lover.databinding.FragmentCoinBinding
+import com.wsg.lover.util.MyCoinUtil
 import com.wsg.lover.util.SpHelper
 import com.wsg.lover.viewModel.CoinViewModel
 
@@ -53,6 +56,8 @@ class UserFragment : BaseFragment() {
         })
         binding.rv.adapter = adapter
 
+        binding.refreshLayout.setOnRefreshListener { initData() }
+
         initViewModel()
         initObserve()
         initData()
@@ -74,18 +79,19 @@ class UserFragment : BaseFragment() {
             myCoin.observe(viewLifecycleOwner) {
                 binding.myCoin.text = "我的积分 $it"
                 context?.apply {
-                    SpHelper.saveCoin(this, it)
-                    if (TextUtils.isEmpty(viewModel?.objectId)) {
+                    MyCoinUtil.instance.myCoin = it
+                    if (!TextUtils.isEmpty(viewModel?.objectId)) {
                         viewModel?.objectId?.let { it1 -> SpHelper.saveMyCoinId(this, it1) }
                     }
                 }
+                binding.refreshLayout.finishRefresh()
             }
         }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        binding.myCoin.text = "我的积分 ${context?.let { SpHelper.getCoin(it) }}"
+        binding.myCoin.text = "我的积分 ${MyCoinUtil.instance.myCoin}}"
     }
 
     private fun initData() {
