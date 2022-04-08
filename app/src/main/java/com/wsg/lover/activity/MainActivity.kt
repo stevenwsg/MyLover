@@ -44,6 +44,8 @@ class MainActivity : BaseActivity() {
                 .show(giftFragment)
                 .hide(userFragment)
                 .commitAllowingStateLoss()
+            binding.giftImageView.setImageResource(R.mipmap.icon_shop_selected)
+            binding.mineImageView.setImageResource(R.mipmap.icon_mine)
         }
 
         binding.mineLayoutView.setOnClickListener {
@@ -52,6 +54,11 @@ class MainActivity : BaseActivity() {
                 .show(userFragment)
                 .hide(giftFragment)
                 .commitAllowingStateLoss()
+
+            binding.giftImageView.setImageResource(R.mipmap.icon_shop)
+            binding.mineImageView.setImageResource(R.mipmap.icon_mine_selected)
+
+            userFragment.refresh()
         }
     }
 }

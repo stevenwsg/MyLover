@@ -1,10 +1,16 @@
 package com.wsg.lover.fragment
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +26,7 @@ import com.wsg.lover.databinding.FragmentGiftBinding
 import com.wsg.lover.util.MyCoinUtil
 import com.wsg.lover.util.SpHelper
 import com.wsg.lover.viewModel.GiftViewModel
+import com.wsg.lover.util.startScaleAnim
 import es.dmoral.toasty.Toasty
 
 /**
@@ -89,6 +96,7 @@ class ProductFragment : BaseFragment() {
                     context?.let { it1 ->
                         Toasty.success(it1, "恭喜兑换成功，快告诉你的小宝贝兑换吧").show()
                         MyCoinUtil.instance.myCoin = it.newCoin
+                        startScaleAnim(binding.gifView)
                     }
 
                 }
