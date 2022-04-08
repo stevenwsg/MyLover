@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.wsg.lover.adapter.CoinAdapter
 import com.wsg.lover.adapter.CoinClickListener
 import com.wsg.lover.base.BaseFragment
@@ -17,7 +15,10 @@ import com.wsg.lover.bean.Coin
 import com.wsg.lover.databinding.FragmentCoinBinding
 import com.wsg.lover.util.MyCoinUtil
 import com.wsg.lover.util.SpHelper
+import com.wsg.lover.util.TimeUtil
+import com.wsg.lover.util.signTime
 import com.wsg.lover.viewModel.CoinViewModel
+import es.dmoral.toasty.Toasty
 
 /**
  * Create on 2022/3/20.
@@ -51,7 +52,13 @@ class UserFragment : BaseFragment() {
         binding.rv.layoutManager = LinearLayoutManager(context)
         adapter = CoinAdapter(object : CoinClickListener {
             override fun onClick(item: Coin) {
-                viewModel?.earnCoin(item)
+                if (TimeUtil.instance.getCurrentTime().signTime ==
+                    SpHelper.getSignTime(item.objectId).signTime) {
+                    Toasty.error(context!!, "小宝贝，一天只能兑换一次哦，可以等明天再来哦").show()
+                } else {
+                    viewModel?.earnCoin(item)
+                    SpHelper.saveSignTime(item.objectId, TimeUtil.instance.getCurrentTime())
+                }
             }
         })
         binding.rv.adapter = adapter

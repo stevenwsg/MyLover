@@ -38,5 +38,25 @@ class SpHelper {
             val sp = context.getSharedPreferences(TAG, Context.MODE_PRIVATE)
             return sp.getString(KEY_MY_COIN_ID, "") ?: ""
         }
+
+        /**
+         * 保存签到时间
+         */
+        fun saveSignTime(key: String, value: String) {
+            val sp = ActivityManager.instance.getTopActivity()
+                .getSharedPreferences(TAG, Context.MODE_PRIVATE)
+            sp.apply {
+                edit().putString(key, value).apply()
+            }
+        }
+
+        /**
+         * 获取签到时间
+         */
+        fun getSignTime(key: String): String {
+            val sp = ActivityManager.instance.getTopActivity()
+                .getSharedPreferences(TAG, Context.MODE_PRIVATE)
+            return sp.getString(key, "") ?: ""
+        }
     }
 }

@@ -93,7 +93,7 @@ class ProductFragment : BaseFragment() {
 
                 }
                 RESULT_FAIL -> {
-                    context?.let { it1 -> Toasty.success(it1, "兑换失败， 小宝贝检查一下积分够嘛").show() }
+                    context?.let { it1 -> Toasty.error(it1, "兑换失败， 小宝贝检查一下积分够嘛").show() }
                 }
             }
         }
